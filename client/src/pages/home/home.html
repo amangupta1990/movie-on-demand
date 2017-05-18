@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding  *ngIf="moviesList">
+<div class="horizontal-scroll dragscroll"  #container >
+  <div class="scrollable-region" [style.width]="containerWidth">
+
+
+  <ion-card *ngFor="let movie of moviesList">
+
+  <ion-item>
+ 
+    <h2>{{movie.title}}</h2>
+    <p>{{movie.publishdate}}</p>
+
+  </ion-item>
+    <button ion-fab item-right style="float:right;margin: -20px 20px -28px;" (click)="openVideo(movie)">
+          <ion-icon name="play"></ion-icon>
+    </button>
+  <img [src]="movie.images[0].url" >
+   <ion-card-content>
+     <ion-row>
+        <ion-col>
+      <ion-chip>
+  <ion-label>Language - {{movie.contents[0].language}}</ion-label>
+</ion-chip>
+    </ion-col>
+    <ion-col>
+      <ion-chip>
+  <ion-label>Rating - {{movie.parentalRatings[0].rating}}</ion-label>
+</ion-chip>
+    </ion-col>
+  </ion-row>
+   </ion-card-content>
+  <ion-card-content>
+    <p>{{truncate(movie.description)}}</p>
+  </ion-card-content>
+
+ 
+
+</ion-card>
+
+  </div>
+</div>
+</ion-content>

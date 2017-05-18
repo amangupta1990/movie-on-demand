@@ -1,0 +1,68 @@
+<!--
+  Generated template for the MediaPlayer page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Now Playing : {{title}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<div class="vertical-align"  *ngIf="playbackEle && playbackEle.paused">
+  <div class="horizontal-align">
+          <ion-fab class="enlarged" (click)="playbackEle.play()">
+          <button ion-fab color="primary">
+          <ion-icon name="play" ></ion-icon>
+       </button>
+        </ion-fab>
+  </div>
+  </div>
+
+<ion-content >
+
+    <canvas class="video-player" #player></canvas>
+    <div class="controls"  *ngIf="playbackEle">
+
+      <div class="playback">
+        <ion-fab>
+          <button ion-fab color="primary" (click)="playbackEle.paused? playbackEle.play() : playbackEle.pause()">
+          <ion-icon name="pause"  *ngIf="!playbackEle.paused"></ion-icon>
+          <ion-icon name="play"   *ngIf="playbackEle.paused"></ion-icon>
+       </button>
+        </ion-fab>
+      </div>
+
+      <div class="seek" >
+        <ion-range min="0" [max]="totalTime" [ngModel]="currentTime" color="primary"
+          (ionChange)="seek($event)">
+          <ion-label range-left>{{timeElapsed}}</ion-label>
+          <ion-label range-right>{{toHHMMSS(playbackEle.duration)}}</ion-label>
+        </ion-range>
+      </div>
+
+
+      <div class="volumn">
+        <ion-icon name="md-volume-down" style="float:left;margin-top:20px;"></ion-icon>
+        <ion-range min="0" max="100" [ngModel]="volume" color="primary" (ionChange)="adjustVolume($event)">
+          <ion-label range-left>0</ion-label>
+          <ion-label range-right>100</ion-label>
+        </ion-range>
+      </div>
+
+        <div class="full-screen">
+          <ion-fab>
+          <button ion-fab color="primary" >
+          <ion-icon name="ios-expand" ></ion-icon>
+    
+       </button>
+        </ion-fab>
+      </div>
+
+
+    </div>
+
+</ion-content>

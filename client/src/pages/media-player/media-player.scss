@@ -1,0 +1,52 @@
+$controlheight:80px;
+page-media-player {
+    .scroll-content{
+        
+        background:#333;
+    }
+ ion-card{
+     width:100%;
+     height:100%;
+     background:black;
+ }
+ canvas{
+     width:100%;
+     margin:auto;
+     display: block;
+     background: black;
+
+ }
+
+ .controls{
+     color:white;
+     position:absolute;
+     bottom:0;
+     padding:10px 0;
+     display:flex;
+     z-index: 100;
+     height:80px;
+     background: rgba(0,0,0,0.8);
+
+
+ }
+ .playback{
+     width:$controlheight;
+     height:$controlheight;
+         padding: 0px 18px;
+ }
+ .seek{
+     flex:3;
+     height:$controlheight;
+ }
+ .volumn{
+ 
+     flex:1;
+     height:$controlheight;
+
+ }
+ .full-screen{
+    height:$controlheight;
+     width:$controlheight;
+         padding: 0px 18px;
+ }
+}
