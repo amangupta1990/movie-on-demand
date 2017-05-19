@@ -18,9 +18,9 @@ export class HistoryPage {
   }
 
   ngOnInit(){
-      this.service.getData()
-        .subscribe((data:any)=>{
-          this.items = data.entries;
+      this.service.getHistory()
+        .subscribe((movies:any)=>{
+          this.items = movies.data;
   
           })
         }

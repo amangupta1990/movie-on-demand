@@ -10,7 +10,7 @@
 <ion-content>
   <ion-list>
     <button ion-item *ngFor="let item of items" (click)="itemTapped(item)">
-      <ion-img width="80" height="120" [src]="item.images[0].url"></ion-img>
+      <img width="80" height="120" [src]="item.images[0].url"/>
       
       <div class="item-note" item-right>
        {{item.title}}

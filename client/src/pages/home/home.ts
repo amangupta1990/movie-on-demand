@@ -4,7 +4,6 @@ import {MediaPlayer} from '../media-player/media-player';
 import {Http} from '@angular/Http';
 import {DataService} from '../../providers/data-service';
 import {Observable} from 'rxjs';
-import dragscroll from 'dragscroll';
 declare var dragScroll:any;
 
 @Component({
@@ -24,12 +23,12 @@ export class HomePage {
 
   ngOnInit(){
     this.service.getData()
-        .subscribe((data:any)=>{
-          this.moviesList = data.entries;
+        .subscribe((movies:any)=>{
+          this.moviesList = movies.data;
           
           // calcualte the widith of the scroll container based on the width of the elements
-          this.containerWidth = data.entries.length*(317+20)+"px";
-          Observable.range(0,1).delay(500).subscribe(()=>{
+          this.containerWidth = movies.data.length*(317+20)+"px";
+          Observable.range(0).delay(500).subscribe(()=>{
             dragScroll.reset();
           })
         })
@@ -37,10 +36,14 @@ export class HomePage {
 
 openVideo(video){
   this.navCtrl.push(MediaPlayer,{data:video});
+  // also , update the the user's watched time 
+  this.service.updateLastWatched({
+    movieId:video.id
+  }).subscribe(data=> console.log(data.data.message),err=>console.log(err.data.message))
 }
 
 truncate(text){
-  return  text!=null?`${text.split('').slice(0,150).join('')}...`:'';
+  return  text!=null?`${text.split(' ').slice(0,50).join(' ')}...`:'';
 }
 
 }

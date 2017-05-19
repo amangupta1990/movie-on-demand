@@ -16,7 +16,21 @@ export class DataService {
   }
 
   getData(){
-    return this.http.get("assets/mockData.json")
+    return this.http.get("/movies")
+    .map(data=>{
+      return data.json();
+    })
+  }
+
+  getHistory(){
+    return this.http.get("/history")
+    .map(data=>{
+      return data.json();
+    })
+  }
+
+  updateLastWatched(movieId){
+    return this.http.post("/history",{data:movieId})
     .map(data=>{
       return data.json();
     })
