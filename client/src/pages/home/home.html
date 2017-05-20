@@ -16,15 +16,15 @@
 
   <ion-item>
  
-    <h2>{{movie.title}}</h2>
-    <p>{{movie.publishdate}}</p>
+    <p>{{movie.title}}</p>
+    <p>{{movie.publishDate}}</p>
 
   </ion-item>
-    <button ion-fab item-right style="float:right;margin: -20px 20px -28px;" (click)="openVideo(movie)">
+    <button ion-fab item-right style="float:right;margin: -10px 8px -43px;" (click)="openVideo(movie)">
           <ion-icon name="play"></ion-icon>
     </button>
   <img [src]="movie.images[0].url" >
-   <ion-card-content>
+   <ion-card-content style="padding:5px;">
      <ion-row>
         <ion-col>
       <ion-chip>

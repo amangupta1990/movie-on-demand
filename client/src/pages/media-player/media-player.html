@@ -23,7 +23,7 @@
   </div>
 
 <ion-content >
-
+  <div id="videoContent">
     <canvas class="video-player" #player></canvas>
     <div class="controls"  *ngIf="playbackEle">
 
@@ -54,9 +54,10 @@
       </div>
 
         <div class="full-screen">
-          <ion-fab>
+          <ion-fab (click)="toggleFullScreen()">
           <button ion-fab color="primary" >
-          <ion-icon name="ios-expand" ></ion-icon>
+          <ion-icon name="ios-expand" *ngIf="!isFullScreen" ></ion-icon>
+           <ion-icon name="ios-contract" *ngIf="isFullScreen" ></ion-icon>
     
        </button>
         </ion-fab>
@@ -64,5 +65,5 @@
 
 
     </div>
-
+</div>
 </ion-content>

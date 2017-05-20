@@ -43,7 +43,7 @@ openVideo(video){
 }
 
 truncate(text){
-  return  text!=null?`${text.split(' ').slice(0,50).join(' ')}...`:'';
+  return  text!=null?`${text.split(' ').slice(0,15).join(' ')}...`:'';
 }
 
 }

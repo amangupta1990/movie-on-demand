@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+declare var document:any;
 /**
  * Generated class for the MediaPlayer page.
  *
@@ -27,14 +27,20 @@ export class MediaPlayer {
   private currentTime:number;
   private totalTime:number;
   private seeker;
+  private isFullScreen:boolean;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+  this.isFullScreen=false;
    this.video = navParams.get("data");
    this.title = this.video.title;
    this.src = this.video.contents[0].url;
   }
 
   ngAfterViewInit(){
-   // set up the screen
+   // set up the fullscreen change event
+    document.addEventListener('webkitfullscreenchange', this.exitHandler, false);
+    document.addEventListener('mozfullscreenchange', this.exitHandler, false);
+    document.addEventListener('fullscreenchange', this.exitHandler, false);
+    document.addEventListener('MSFullscreenChange',this. exitHandler, false);
    
    this.screenContext =this.screen.nativeElement.getContext('2d');
    this.screenWidth =Math.floor(this.screen.nativeElement.clientWidth);
@@ -116,6 +122,7 @@ export class MediaPlayer {
   }
 
   toHHMMSS = function (secs) {
+    if(!NaN) return "00:00:00";
     let sec_num = parseInt(secs, 10); // don't forget the second param
     let hours:any   = Math.floor(sec_num / 3600);
     let minutes:any = Math.floor((sec_num - (hours * 3600)) / 60);
@@ -127,4 +134,31 @@ export class MediaPlayer {
     return hours+':'+minutes+':'+seconds;
 }
 
+  toggleFullScreen() {
+  if (!this.isFullScreen) {
+    let ele = document.querySelector("#videoContent");
+     ele.requestFullscreen =
+      ele.webkitRequestFullscreen || ele.requestFullscreen || ele.mozRequestFullscreen;
+      ele.requestFullscreen();
+     this.isFullScreen=true;
+
+  } else {
+
+
+     document.cancelFullscreen =
+      document.webkitExitFullscreen || document.exitExitFullscreen || document.mozExitFullscreen;
+      document.cancelFullscreen();
+       this.isFullScreen=false;
+    
+  }
 }
+
+ exitHandler()
+{
+   this.isFullScreen  =document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement;
+    
+       
+   }
+}
+
+
