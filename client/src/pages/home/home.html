@@ -17,7 +17,7 @@
   <ion-item>
  
     <p>{{movie.title}}</p>
-    <p>{{movie.publishDate}}</p>
+    <p>({{movie.publishedDate | amDateFormat:'YYYY'}})</p>
 
   </ion-item>
     <button ion-fab item-right style="float:right;margin: -10px 8px -43px;" (click)="openVideo(movie)" *ngIf="selector==i">

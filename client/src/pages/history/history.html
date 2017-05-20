@@ -7,15 +7,31 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
-  <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped(item)">
-      <img width="80" height="120" [src]="item.images[0].url"/>
-      
-      <div class="item-note" item-right>
-       {{item.title}}
-      </div>
-    </button>
-  </ion-list>
+<ion-content padding  *ngIf="moviesList">
+<div class="horizontal-scroll dragscroll"  #container >
+  <div class="scrollable-region" [style.width]="containerWidth">
 
+
+  <ion-card *ngFor="let movie of moviesList; let i = index;" [ngClass]="{'selected': i==selector}" (mouseover)="selector=i;">
+
+  <ion-item>
+ 
+    <p>{{movie.title}}</p>
+    <p>{{movie.publishDate}}</p>
+
+  </ion-item>
+    <button ion-fab item-right style="float:right;margin: -10px 8px -43px;" (click)="openVideo(movie)" *ngIf="selector==i">
+          <ion-icon name="play"></ion-icon>
+    </button>
+  <img [src]="movie.images[0].url" >
+  <ion-card-content>
+    <p>watched - {{lastWatched | amTimeAgo }}</p>
+  </ion-card-content>
+
+ 
+
+</ion-card>
+
+  </div>
+</div>
 </ion-content>

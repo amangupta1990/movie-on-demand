@@ -9,6 +9,8 @@ import {MediaPlayer} from '../pages/media-player/media-player';
 import {DataService} from '../providers/data-service';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import {MomentModule} from 'angular2-moment';
+
 
 @NgModule({
   declarations: [
@@ -21,6 +23,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     HttpModule,
     JsonpModule,
     BrowserModule,
+    MomentModule,
     IonicModule.forRoot(MyApp)
     
   ],
