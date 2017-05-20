@@ -55922,6 +55922,24 @@ var HomePage = (function () {
         this.containerWidth = '';
         this.selector = 0;
     }
+    HomePage.prototype.checkKey = function (e) {
+        {
+            e = e || window.event;
+            // if the enter key is pressed , play the movie 
+            if (e.keyCode == '13') {
+                this.openVideo(this.moviesList[this.selector]);
+            }
+            if (e.keyCode == '37') {
+                if (this.selector > 0)
+                    this.selector--;
+            }
+            else if (e.keyCode == '39') {
+                if (this.selector < this.moviesList.length)
+                    this.selector++;
+            }
+            document.querySelector(".horizontal-scroll").querySelectorAll('ion-card')[this.selector].scrollIntoView();
+        }
+    };
     HomePage.prototype.ngOnInit = function () {
         var _this = this;
         this.service.getData()
@@ -55929,33 +55947,18 @@ var HomePage = (function () {
             _this.moviesList = movies.data;
             // calcualte the widith of the scroll container based on the width of the elements
             _this.containerWidth = movies.data.length * (317 + 20) + "px";
+            //hide the splashScreen
         });
     };
     HomePage.prototype.ngAfterViewInit = function () {
-        var _this = this;
         if (!dragscroll)
             window.onload = function () { dragscroll.reset(); };
         else
             setTimeout(function () {
                 dragscroll.reset();
             }, 100);
+        document.querySelector(".splashscreen").classList.add("hidden");
         // add event left and right arrows event listeners for checkig
-        window.addEventListener('keydown', function (e) {
-            e = e || window.event;
-            // if the enter key is pressed , play the movie 
-            if (e.keyCode == '13') {
-                _this.openVideo(_this.moviesList[_this.selector]);
-            }
-            if (e.keyCode == '37') {
-                if (_this.selector > 0)
-                    _this.selector--;
-            }
-            else if (e.keyCode == '39') {
-                if (_this.selector < _this.moviesList.length)
-                    _this.selector++;
-            }
-            document.querySelector(".horizontal-scroll").querySelectorAll('ion-card')[_this.selector].scrollIntoView();
-        });
     };
     HomePage.prototype.openVideo = function (video) {
         this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__media_player_media_player__["a" /* MediaPlayer */], { data: video });
@@ -55969,15 +55972,20 @@ var HomePage = (function () {
     };
     return HomePage;
 }());
+__decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* HostListener */])('window:keydown', ['$event']),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], HomePage.prototype, "checkKey", null);
 HomePage = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_5" /* Component */])({
         selector: 'page-home',template:/*ion-inline-start:"C:\Users\amang\movie-on-demand\client\src\pages\home\home.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>Home</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding  *ngIf="moviesList">\n<div class="horizontal-scroll dragscroll"  #container >\n  <div class="scrollable-region" [style.width]="containerWidth">\n\n\n  <ion-card *ngFor="let movie of moviesList; let i = index;" [ngClass]="{\'selected\': i==selector}" (mouseover)="selector=i;">\n\n  <ion-item>\n \n    <p>{{movie.title}}</p>\n    <p>{{movie.publishDate}}</p>\n\n  </ion-item>\n    <button ion-fab item-right style="float:right;margin: -10px 8px -43px;" (click)="openVideo(movie)" *ngIf="selector==i">\n          <ion-icon name="play"></ion-icon>\n    </button>\n  <img [src]="movie.images[0].url" >\n   <ion-card-content style="padding:5px;">\n     <ion-row>\n        <ion-col>\n      <ion-chip>\n  <ion-label>Language - {{movie.contents[0].language}}</ion-label>\n</ion-chip>\n    </ion-col>\n    <ion-col>\n      <ion-chip>\n  <ion-label>Rating - {{movie.parentalRatings[0].rating}}</ion-label>\n</ion-chip>\n    </ion-col>\n  </ion-row>\n   </ion-card-content>\n  <ion-card-content>\n    <p>{{truncate(movie.description)}}</p>\n  </ion-card-content>\n\n \n\n</ion-card>\n\n  </div>\n</div>\n</ion-content>\n'/*ion-inline-end:"C:\Users\amang\movie-on-demand\client\src\pages\home\home.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_3__providers_data_service__["a" /* DataService */],
-        __WEBPACK_IMPORTED_MODULE_0__angular_core__["s" /* ElementRef */]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__providers_data_service__["a" /* DataService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_data_service__["a" /* DataService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["s" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["s" /* ElementRef */]) === "function" && _c || Object])
 ], HomePage);
 
+var _a, _b, _c;
 //# sourceMappingURL=home.js.map
 
 /***/ }),

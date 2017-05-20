@@ -24777,6 +24777,19 @@ ion-icon[name="play"] {
   padding-left: 5px;
 }
 
+.splashscreen {
+  background: #488aff;
+  z-index: 100;
+  display: absolute;
+  font-family: sans-serif;
+  transition: all 1s liner;
+}
+
+.splashscreen.hidden {
+  -webkit-transform: translateY(-100%);
+  transform: translateY(-100%);
+}
+
 page-home .scroll-content {
   overflow-y: hidden;
   background: #333;
