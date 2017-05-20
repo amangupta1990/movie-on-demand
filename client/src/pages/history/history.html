@@ -7,6 +7,12 @@
   </ion-navbar>
 </ion-header>
 
+<div class="vertical-align"  *ngIf=!moviesList>
+  <div class="horizontal-align">
+          <ion-spinner></ion-spinner>
+  </div>
+  </div>
+
 <ion-content padding  *ngIf="moviesList">
 <div class="horizontal-scroll dragscroll"  #container >
   <div class="scrollable-region" [style.width]="containerWidth">
@@ -17,7 +23,7 @@
   <ion-item>
  
     <p>{{movie.title}}</p>
-    <p>{{movie.publishDate}}</p>
+    <p>{{movie.publishDate | amDateFormat:'YYYY'}}</p>
 
   </ion-item>
     <button ion-fab item-right style="float:right;margin: -10px 8px -43px;" (click)="openVideo(movie)" *ngIf="selector==i">

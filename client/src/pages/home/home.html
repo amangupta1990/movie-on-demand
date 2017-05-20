@@ -7,7 +7,15 @@
   </ion-navbar>
 </ion-header>
 
+<div class="vertical-align"  *ngIf=!moviesList>
+  <div class="horizontal-align">
+          <ion-spinner ></ion-spinner>
+  </div>
+  </div>
+
 <ion-content padding  *ngIf="moviesList">
+
+  
 <div class="horizontal-scroll dragscroll"  #container >
   <div class="scrollable-region" [style.width]="containerWidth">
 

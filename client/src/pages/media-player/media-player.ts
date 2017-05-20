@@ -1,19 +1,26 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef , HostListener} from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 declare var document:any;
-/**
- * Generated class for the MediaPlayer page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
-@IonicPage()
 @Component({
   selector: 'page-media-player',
   templateUrl: 'media-player.html',
 })
 export class MediaPlayer {
   @ViewChild('player') screen:ElementRef;
+    @HostListener('window:keydown', ['$event'])
+    checkKey(e) {
+     e = e || window.event;
+
+        //exit fullscreen:
+     if(e.keyCode == '13')
+     this.isFullScreen = false;
+
+     // toggle play pause
+     if(e.keyCode== '32'){
+       this.playbackEle.paused? this.playbackEle.play() : this.playbackEle.pause();
+     }
+    
+   }
   private video:any;
   private title:string;
   private src:string;
@@ -36,11 +43,7 @@ export class MediaPlayer {
   }
 
   ngAfterViewInit(){
-   // set up the fullscreen change event
-    document.addEventListener('webkitfullscreenchange', this.exitHandler, false);
-    document.addEventListener('mozfullscreenchange', this.exitHandler, false);
-    document.addEventListener('fullscreenchange', this.exitHandler, false);
-    document.addEventListener('MSFullscreenChange',this. exitHandler, false);
+
    
    this.screenContext =this.screen.nativeElement.getContext('2d');
    this.screenWidth =Math.floor(this.screen.nativeElement.clientWidth);
@@ -153,12 +156,7 @@ export class MediaPlayer {
   }
 }
 
- exitHandler()
-{
-   this.isFullScreen  =document.webkitIsFullScreen || document.mozFullScreen || document.msFullscreenElement;
-    
-       
-   }
+
 }
 
 
