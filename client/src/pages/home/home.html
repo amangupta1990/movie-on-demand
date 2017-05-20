@@ -12,7 +12,7 @@
   <div class="scrollable-region" [style.width]="containerWidth">
 
 
-  <ion-card *ngFor="let movie of moviesList">
+  <ion-card *ngFor="let movie of moviesList; let i = index;" [ngClass]="{'selected': i==selector}" (mouseover)="selector=i;">
 
   <ion-item>
  
@@ -20,7 +20,7 @@
     <p>{{movie.publishDate}}</p>
 
   </ion-item>
-    <button ion-fab item-right style="float:right;margin: -10px 8px -43px;" (click)="openVideo(movie)">
+    <button ion-fab item-right style="float:right;margin: -10px 8px -43px;" (click)="openVideo(movie)" *ngIf="selector==i">
           <ion-icon name="play"></ion-icon>
     </button>
   <img [src]="movie.images[0].url" >

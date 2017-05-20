@@ -24780,15 +24780,30 @@ ion-icon[name="play"] {
 page-home .scroll-content {
   overflow-y: hidden;
   background: #333;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+page-home .selected {
+  border: 3px solid #488aff;
+  -webkit-transform: scale(1.05);
+  transform: scale(1.05);
 }
 
 page-home .horizontal-scroll {
   width: 100%;
-  height: 100%;
   overflow-x: hidden;
 }
 
 page-home .horizontal-scroll ion-card {
+  transition: all 0.1s linear;
   float: left;
   width: 217px;
   min-height: 547px;
@@ -24819,6 +24834,10 @@ page-home .horizontal-scroll ion-card-conent .ion-row {
   -ms-flex-direction: row;
   flex-direction: row;
   margin: -10px -10px;
+}
+
+page-home .dragscroll {
+  padding: 15px;
 }
 
 page-media-player .scroll-content {

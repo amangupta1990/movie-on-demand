@@ -1,15 +1,24 @@
 page-home {
-.scroll-content{overflow-y:hidden; background: #333}    
+.scroll-content{overflow-y:hidden; background: #333;
+display: flex;
+flex-direction: column;
+justify-content: center;}    
+.selected{
+    border:3px solid #488aff;
+    transform:scale(1.05);
+}
 .horizontal-scroll{
     
     width:100%;
-    height:100%;
+   
     overflow-x:hidden;
+   
 
 ion-card{
     img{
       cursor:pointer;
     }
+            transition: all 0.1s linear;
         float:left;
         width:217px;
         min-height:547px;
@@ -32,6 +41,11 @@ ion-card:nth-child(1){
      }
  }
     
+}
+
+.dragscroll{
+    padding:15px;
+  
 }
 
  

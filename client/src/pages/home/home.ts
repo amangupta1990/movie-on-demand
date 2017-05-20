@@ -1,10 +1,10 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {MediaPlayer} from '../media-player/media-player';
-import {Http} from '@angular/Http';
 import {DataService} from '../../providers/data-service';
-import {Observable} from 'rxjs';
-declare var dragScroll:any;
+declare var window:any;
+declare var dragscroll:any;
+
 
 @Component({
   selector: 'page-home',
@@ -12,9 +12,9 @@ declare var dragScroll:any;
 })
 
 export class HomePage {
-  @ViewChild("container") container:ElementRef;
   private moviesList: any[];
   private containerWidth = '';
+  private selector:number = 0 ;
   constructor(public navCtrl: NavController,
   public service:DataService,
   private ele:ElementRef) {
@@ -27,12 +27,50 @@ export class HomePage {
           this.moviesList = movies.data;
           
           // calcualte the widith of the scroll container based on the width of the elements
-          this.containerWidth = movies.data.length*(317+20)+"px";
-          Observable.range(0).delay(500).subscribe(()=>{
-            dragScroll.reset();
-          })
+          this.containerWidth = movies.data.length*(317+20)+"px";               
+        
+                
+  
         })
   }
+
+  ngAfterViewInit(){
+           if(!dragscroll)
+                window.onload = ()=>{ dragscroll.reset(); }
+                else
+                setTimeout(()=>{
+                   dragscroll.reset();
+                }, 100);
+
+                // add event left and right arrows event listeners for checkig
+                window.addEventListener('keydown',(e)=>{
+                   e = e || window.event;
+
+ // if the enter key is pressed , play the movie 
+
+ if(e.keyCode == '13'){
+   this.openVideo(this.moviesList[this.selector]);
+   
+ }
+
+     if (e.keyCode == '37') {
+       if(this.selector > 0)
+     this.selector--;
+   
+              
+    }
+    else if (e.keyCode == '39') {
+          if(this.selector < this.moviesList.length)
+         this.selector ++;
+    }
+
+      document.querySelector(".horizontal-scroll").querySelectorAll('ion-card')[this.selector].scrollIntoView()
+                }) 
+
+       
+               
+  }
+
 
 openVideo(video){
   this.navCtrl.push(MediaPlayer,{data:video});
