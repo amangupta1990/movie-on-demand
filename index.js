@@ -131,7 +131,7 @@ app.get("/", (req, res) => {
 });
 app.use(express.static('./client/www/'));
 
-http.createServer(app).listen(process.env.PORT || 80);
+http.createServer(app).listen(process.env.PORT || 8080);
 
 
 
