@@ -36,4 +36,4 @@ The command starts the ionic-app-scripts in watch mode to build the scource code
 - NOTE: The express server must also be running in order for the app the run correctly during development.
 
 ## building the app for production
-Run `npm run build:www` . This commands build the AOT version of the app which lightweight .
+Run `npm run build:www` . This command builds the AOT version of the app which lightweight .
