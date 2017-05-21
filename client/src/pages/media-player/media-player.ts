@@ -152,7 +152,7 @@ export class MediaPlayer {
    * takes a duration value in seconds and converts it into hh:mm:ss
    */
   toHHMMSS = function (secs) {
-    if (!NaN) return "00:00:00";
+    if (NaN) return "00:00:00";
     let sec_num = parseInt(secs, 10); // don't forget the second param
     let hours: any = Math.floor(sec_num / 3600);
     let minutes: any = Math.floor((sec_num - (hours * 3600)) / 60);
@@ -164,7 +164,7 @@ export class MediaPlayer {
     return hours + ':' + minutes + ':' + seconds;
   }
 
-  
+
   toggleFullScreen() {
     if (!this.isFullScreen) {
       let ele = document.querySelector("#videoContent");
