@@ -3,6 +3,9 @@ page-media-player {
     .scroll-content{
         
         background:black;
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
     }
  ion-card{
      width:100%;

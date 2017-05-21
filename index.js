@@ -20,6 +20,7 @@ catch (e) {
 const db = new Datastore({ filename: './db/db', autoload: true });
 let mockData = require("./data/movies.json").entries.map(item => { item.dataType = "movie"; return item; });
 db.insert(mockData);
+console.log("Database ready");
 const app = express();
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -51,13 +52,15 @@ app.get('/movies', (req, res) => {
 
 app.get("/history", (req, res) => {
     const userID = req.cookies.movie_app_user;
-    db.find({ userId: userID, dataType: "history" }).sort({ last_watched: -1 }).exec(function (err, results) {
+    db.find({ userId: userID, dataType: "history" }).sort({ lastWatched: -1 }).exec( (err, results)=> {
         if (!err) {
             // filter movies based on these results 
             Promise.all(results.map(item => {
                 return _findMovie(item.movieId);
             })
             ).then(movies => {
+                // map the lastwatched field into the movies and send it back
+                results.map((r,i,a)=>{ movies[i].lastWatched = r.lastWatched; })
                 res.status(200).json({ message: "", data: movies });
             })
                 .catch(err => {
@@ -88,7 +91,7 @@ app.post("/history", (req, res) => {
     db.findOne({ "userId": userID, movieId: movieId }).exec((err, exists) => {
         if (!err && exists) {
             // update the last watched time .
-            db.update({ id: movieId }, { lastWatched: Date.now() }, (err, success) => {
+            db.update({ _id: exists._id}, { $set:{lastWatched: Date.now()} },{}, (err, success) => {
                 if (!err && success) {
                     res.status(200).json({ data: "", message: "history updated successfully" })
                 }
@@ -103,11 +106,12 @@ app.post("/history", (req, res) => {
                 dataType: "history",
                 userId: userID,
                 movieId: movieId,
-                last_watched: Date.now()
+                lastWatched: Date.now()
             };
 
             db.insert(history, (err, success) => {
                 if (!err && success) {
+                    
                     res.status(200).json({ data: "", message: "history created successfully" })
                 }
                 else {
