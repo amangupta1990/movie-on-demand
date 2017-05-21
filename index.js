@@ -26,10 +26,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-/**
- * define simple routes 
- * 
- */
+
 
 /**
  * get the list of movies 
@@ -86,7 +83,10 @@ app.post("/history", (req, res) => {
     let lastWatched = Date.now();
     let movieId = req.body.data.movieId;
 
-    // find the movie and update 
+   /**
+    * if the movies exists in the user's history, update the lastWatched Time 
+    else create a new history document .
+    */
 
     db.findOne({ "userId": userID, movieId: movieId }).exec((err, exists) => {
         if (!err && exists) {
@@ -129,6 +129,7 @@ app.get("/", (req, res) => {
     if (!req.cookies.movie_app_user) {
 
         // create a user history document:
+     
         res.cookie('movie_app_user', uuid());
     }
     res.sendfile("index.html", { root: "./client/www" });

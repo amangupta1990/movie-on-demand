@@ -1,4 +1,4 @@
-import { Component, ElementRef , HostListener} from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { MediaPlayer } from '../media-player/media-player';
 import { DataService } from '../../providers/data-service';
@@ -12,8 +12,13 @@ declare var dragscroll: any;
 })
 
 export class HistoryPage {
+  /**
+   * 
+   * @param e 
+   * bind to the window's keydow event . handles arrow keys for movie selection and enter to play the movie
+   */
   @HostListener('window:keydown', ['$event'])
-    checkKey(e) {
+  checkKey(e) {
     {
       e = e || window.event;
 
@@ -35,15 +40,22 @@ export class HistoryPage {
           this.selector++;
       }
 
-      document.querySelector(".horizontal-scroll").querySelectorAll('ion-card')[this.selector].scrollIntoView()
+   
     }
-  }
+  }/**
+   *  stores the list of movies 
+   */
   private moviesList: any[];
+  /**
+   *   the width to which the list container should adjust to
+   */
   private containerWidth = '';
+  /**
+   * stores the index of the currently selected video
+   */
   private selector: number = 0;
   constructor(public navCtrl: NavController,
-    public service: DataService,
-    private ele: ElementRef) {
+    public service: DataService) {
 
   }
 
@@ -54,13 +66,16 @@ export class HistoryPage {
 
         // calcualte the widith of the scroll container based on the width of the elements
         this.containerWidth = movies.data.length * (317 + 20) + "px";
-        //hide the splashScreen
-       
+      
+
 
 
       })
   }
 
+/**
+ * call the dragscroll library after the component view has loaded
+ */
   ngAfterViewInit() {
     if (!dragscroll)
       window.onload = () => { dragscroll.reset(); }
@@ -68,8 +83,8 @@ export class HistoryPage {
       setTimeout(() => {
         dragscroll.reset();
       }, 100);
-       document.querySelector(".splashscreen").classList.add("hidden");
-    // add event left and right arrows event listeners for checkig
+    document.querySelector(".splashscreen").classList.add("hidden");
+
 
 
 
@@ -77,15 +92,24 @@ export class HistoryPage {
   }
 
 
-
+/**
+ * 
+ * @param video 
+ * launches the video player by passing the selected video item to the media player.
+ * also calles the server to update the user's history.
+ */
   openVideo(video) {
     this.navCtrl.push(MediaPlayer, { data: video });
-    // also , update the the user's watched time 
     this.service.updateLastWatched({
       movieId: video.id
     }).subscribe(data => console.log(data.data.message), err => console.log(err.data.message))
   }
 
+ /**
+   * 
+   * @param text 
+   * truncates the video's description to 15 words .
+   */
   truncate(text) {
     return text != null ? `${text.split(' ').slice(0, 15).join(' ')}...` : '';
   }

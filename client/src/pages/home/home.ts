@@ -1,4 +1,4 @@
-import { Component, ElementRef , HostListener} from '@angular/core';
+import { Component , HostListener} from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { MediaPlayer } from '../media-player/media-player';
 import { DataService } from '../../providers/data-service';
@@ -12,6 +12,11 @@ declare var dragscroll: any;
 })
 
 export class HomePage {
+    /**
+   * 
+   * @param e 
+   * bind to the window's keydow event . handles arrow keys for movie selection and enter to play the movie
+   */
   @HostListener('window:keydown', ['$event'])
     checkKey(e) {
     {
@@ -35,15 +40,23 @@ export class HomePage {
           this.selector++;
       }
 
-      document.querySelector(".horizontal-scroll").querySelectorAll('ion-card')[this.selector].scrollIntoView()
+     
     }
   }
+  /**
+   * stores the list of movies 
+   */
   private moviesList: any[];
+  /**
+   * the width to which the list container should adjust to
+   */
   private containerWidth = '';
+  /**
+   * stores the currently selected movie's index 
+   */
   private selector: number = 0;
   constructor(public navCtrl: NavController,
-    public service: DataService,
-    private ele: ElementRef) {
+    public service: DataService) {
 
   }
 
@@ -68,8 +81,11 @@ export class HomePage {
       setTimeout(() => {
         dragscroll.reset();
       }, 100);
+      /**
+       * hide the splash screen after the app has loaded and the list of movies have been fetched 
+       */
        document.querySelector(".splashscreen").classList.add("hidden");
-    // add event left and right arrows event listeners for checkig
+  
 
 
 
@@ -78,6 +94,12 @@ export class HomePage {
 
 
 
+/**
+ * 
+ * @param video 
+ * launches the video player by passing the selected video item to the media player.
+ * also calles the server to update the user's history.
+ */
   openVideo(video) {
     this.navCtrl.push(MediaPlayer, { data: video });
     // also , update the the user's watched time 
@@ -86,6 +108,11 @@ export class HomePage {
     }).subscribe(data => console.log(data.data.message), err => console.log(err.data.message))
   }
 
+  /**
+   * 
+   * @param text 
+   * truncates the video's description to 15 words .
+   */
   truncate(text) {
     return text != null ? `${text.split(' ').slice(0, 15).join(' ')}...` : '';
   }

@@ -7,6 +7,12 @@ declare var document: any;
 })
 export class MediaPlayer {
   @ViewChild('player') screen: ElementRef;
+  /**
+   * 
+   * @param e 
+   * bind's the component function to the window's keydown event .
+   * this is needed for detecting the escape key and the sapcebar for play pause
+   */
   @HostListener('window:keydown', ['$event'])
   checkKey(e) {
     e = e || window.event;
@@ -44,7 +50,9 @@ export class MediaPlayer {
 
   ngAfterViewInit() {
 
-
+    /**
+     * get the canvas context and initialize it fit the current screen's aspect ratio
+     */
     this.screenContext = this.screen.nativeElement.getContext('2d');
     this.screenWidth = Math.floor(this.screen.nativeElement.clientWidth);
     this.screenHeight = this.screenWidth / 2.031;
@@ -52,12 +60,16 @@ export class MediaPlayer {
     this.screen.nativeElement.height = this.screenHeight;
     // set up the video Element
 
-    // create the vide element
+    /**
+     * create a new video lement and set the source to the current selected video
+     */
     this.playbackEle = document.createElement('video');
     this.playbackEle.src = this.src;
     this.playbackEle.preload = "auto";
 
-    // handle window resize:
+    /**
+     * handler for adjusting the the video and controls to fit on window resize
+     */
     window.addEventListener('resize', () => {
       this.screenWidth = Math.floor(this.screen.nativeElement.clientWidth);
       this.screenHeight = this.screenWidth / 2.031;
@@ -70,6 +82,9 @@ export class MediaPlayer {
       this.renderVideo(this.screenContext, this.playbackEle)
     })
 
+    /**
+     *  once the mdia player has loaded , set up the control to respond to certain mouse events 
+     */
     setTimeout(() => {
 
       //adjust control width
@@ -94,6 +109,13 @@ export class MediaPlayer {
 
   }
 
+ /**
+  * 
+  * @param screen 
+  * @param video 
+  called when the video is being played . it renders the video element into the canvas.
+  it also update the elapsed time of the video
+  */
   renderVideo(screen, video) {
     if (video.paused || video.ended) return false;
     screen.drawImage(video, 0, 0, this.screenWidth, this.screenHeight);
@@ -103,10 +125,10 @@ export class MediaPlayer {
     setTimeout(() => { this.renderVideo(screen, video) }, 20);
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad MediaPlayer');
-  }
 
+  /**
+   *  when the user exists the video player, stop the video and destroy it .
+   */
   ngOnDestroy() {
     this.playbackEle.pause();
     delete this.playbackEle;
@@ -126,6 +148,9 @@ export class MediaPlayer {
 
   }
 
+  /**
+   * takes a duration value in seconds and converts it into hh:mm:ss
+   */
   toHHMMSS = function (secs) {
     if (!NaN) return "00:00:00";
     let sec_num = parseInt(secs, 10); // don't forget the second param
@@ -139,6 +164,7 @@ export class MediaPlayer {
     return hours + ':' + minutes + ':' + seconds;
   }
 
+  
   toggleFullScreen() {
     if (!this.isFullScreen) {
       let ele = document.querySelector("#videoContent");
