@@ -32,8 +32,8 @@ The app is built using the ionic framework (angular2) . To develop the app:
 - install ionic cli `npm install -g ionic`
 - cd into the client directory and run `npm install`
 - run `ionic serve`. This will launch the a new browser session. You can close this as it will not be required.
-The commnads starts the ionic-app-scripts in watch mode to build the scource code as it is saved.
+The command starts the ionic-app-scripts in watch mode to build the scource code as it is saved.
 - NOTE: The express server must also be running in order for the app the run correctly during development.
-- 
+
 ## building the app for production
 Run `npm run build:www` . This commands build the AOT version of the app which lightweight .
