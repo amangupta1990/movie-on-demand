@@ -40,7 +40,7 @@ export class HomePage {
           this.selector++;
       }
 
-     
+     document.querySelector(".horizontal-scroll").querySelectorAll("ion-card")[this.selector].scrollIntoView();
     }
   }
   /**
@@ -74,7 +74,7 @@ export class HomePage {
       })
   }
 
-  ngAfterViewInit() {
+  ionViewDidLoad () {
     if (!dragscroll)
       window.onload = () => { dragscroll.reset(); }
     else

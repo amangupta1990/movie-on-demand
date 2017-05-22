@@ -39,7 +39,7 @@ export class HistoryPage {
         if (this.selector < this.moviesList.length)
           this.selector++;
       }
-
+        document.querySelector(".horizontal-scroll").querySelectorAll("ion-card")[this.selector].scrollIntoView();
    
     }
   }/**
@@ -76,7 +76,7 @@ export class HistoryPage {
 /**
  * call the dragscroll library after the component view has loaded
  */
-  ngAfterViewInit() {
+  ionViewDidLoad() {
     if (!dragscroll)
       window.onload = () => { dragscroll.reset(); }
     else
